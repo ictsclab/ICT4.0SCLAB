@@ -1,0 +1,15 @@
+{
+    "name": "AzureSpatialAnchors.SDK.Windows.Runtime",
+    "references": [],
+    "includePlatforms": [
+        "Editor",
+        "WSA"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

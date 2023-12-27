@@ -1,0 +1,16 @@
+{
+    "name": "AzureSpatialAnchors.SDK.Core.Editor",
+    "references": [
+        "AzureSpatialAnchors.SDK.Core.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

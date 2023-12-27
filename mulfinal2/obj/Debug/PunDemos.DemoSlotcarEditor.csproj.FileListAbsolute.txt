@@ -1,0 +1,2 @@
+C:\Users\sws57\Desktop\gyugyu\Multi User Version (2)\obj\Debug\PunDemos.DemoSlotcarEditor.csproj.AssemblyReference.cache
+C:\Users\sws57\Desktop\gyugyu\Multi User Version (2)\obj\Debug\PunDemos.DemoSlotcarEditor.csproj.CoreCompileInputs.cache
