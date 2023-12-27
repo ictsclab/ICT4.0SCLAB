@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LightBuzz.Kinect4Azure.Editor</name>
+    </assembly>
+    <members>
+        <member name="T:LightBuzz.Kinect4Azure.BuildEventsEditor">
+            <summary>
+            Copies binaries to build directory.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.BuildEventsEditor.OnPostprocessBuild(UnityEditor.BuildTarget,System.String)">
+            <summary>
+            Copies the required Azure Kinect binaries to the build folder.
+            </summary>
+            <param name="target">The build target platform.</param>
+            <param name="pathToBuiltProject">The path to the executable project.</param>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.UnityEnvironment.AssetFolder">
+            <summary>
+            The asset folder.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.UnityEnvironment.PluginsFolder">
+            <summary>
+            The native C++ plugins folder.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.UnityEnvironment.VersionFile">
+            <summary>
+            The LightBuzz K4A version file.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.UnityEnvironment.#cctor">
+            <summary>
+            Copies the required Azure Kinect binaries to the root folder.
+            </summary>
+        </member>
+    </members>
+</doc>

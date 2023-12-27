@@ -1,0 +1,1785 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LightBuzz.Kinect4Azure</name>
+    </assembly>
+    <members>
+        <member name="T:LightBuzz.Kinect4Azure.Avateering.Avatar">
+            <summary>
+            Represents an animatable avatar.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Avatar.AvatarRoot">
+            <summary>
+            The 3D model root object.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Avatar.UpdatePose">
+            <summary>
+            Specifies whether the avatar should update its pose.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Avatar.MatchScale">
+            <summary>
+            Scales the model to match the scale of the body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Avatar.UseWorldPosition">
+            <summary>
+            Specifies whether the avatar will move in the 3D world space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Avatar.SmoothDelta">
+            <summary>
+             The motion smoothing factor (0.0 - 1.0).
+             </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.Initialize(UnityEngine.GameObject)">
+            <summary>
+            Assigns a new root GameObject for the avatar.
+            Caches animator bones for rotation.
+            </summary>
+            <param name="newAvatarRoot">The new root GameObject from the avatar to use.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.Initialize">
+            <summary>
+            Caches animator bones for rotation.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.DoTPose">
+            <summary>
+            Forces model to T-Pose.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.CalculateOrientations(LightBuzz.Kinect4Azure.Body)">
+            <summary>
+            Calculations are done by finding a normal, a destination and the offset to the original rotation.
+            The normal defines the UP vector in order to rotate the joints based on an axis.
+            The destination is where the joint should "look at".
+            The hard coded offset of each joint rotates the joint to the correct place from its original rotation from the T-Pose.
+            </summary>
+            <param name="body"></param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.CalculateScale(LightBuzz.Kinect4Azure.Body)">
+            <summary>
+            Calculates and applies the scale to the avatar to meet the body.
+            </summary>
+            <param name="body">The body object.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.GetBone(UnityEngine.HumanBodyBones)">
+            <summary>
+            Finds and returns the bone of the Animator.
+            </summary>
+            <param name="humanBodyBone"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.Update(LightBuzz.Kinect4Azure.Body,LightBuzz.Kinect4Azure.Floor)">
+            <summary>
+            Initializes the avatar if it has not been initialized.
+            Updates joints orientation and position.
+            </summary>
+            <param name="body">The body data to feed the avatar with.</param>
+            <param name="floor">The floor data.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.UpdateJump(LightBuzz.Kinect4Azure.Body,LightBuzz.Kinect4Azure.Floor)">
+            <summary>
+            Calculates jump and crouch.
+            </summary>
+            <param name="body"></param>
+            <param name="floor"></param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.PositionBonesAtPoint(UnityEngine.Vector3)">
+            <summary>
+            Sets the position of the highest hierarchy bone at the position, thus moving the whole avatar.
+            </summary>
+            <param name="point">The new position of the root bone.</param>
+            <returns>True if the bone was positioned. False if it failed.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.PositionAt(UnityEngine.Vector3)">
+            <summary>
+            Sets the position of the avatar at point.
+            </summary>
+            <param name="point">The new position of the avatar.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.ApplyScaleAtBody(System.Single)">
+            <summary>
+            Applies scale to the Avatar Root.
+            </summary>
+            <param name="newScale">The scale factor to apply.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.ApplyScaleAtBones(System.Single)">
+            <summary>
+            Applies scale to the highest hierarchy bone.
+            </summary>
+            <param name="newScale">The scale factor to apply.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.FindHighestHieararchyBone">
+            <summary>
+            Center of mass will be used to calculate offset.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Avatar.CountParents(UnityEngine.Transform)">
+            <summary>
+            Counts how many parents a transform has.
+            </summary>
+            <param name="transform"></param>
+            <returns></returns>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Avateering.AvateeringConstants.LightBuzzCrossAnimatorBones">
+            <summary>
+            Joints that reflect to unity joints
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Avateering.AvateeringConstants.JointTypeToFlippedJointType">
+            <summary>
+            Maps the human joints to their mirrored equivalents.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Avateering.Bone">
+            <summary>
+            Represents an avatar bone.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Bone.Transform">
+            <summary>The transform of the bone.</summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Bone.OriginalRotation">
+            <summary>The original rotation of the bone.</summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Bone.OriginalPosition">
+            <summary>The original position of the bone.</summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Bone.CalibrateOriginalRotation">
+            <summary>
+            Calibrate the original bone rotation.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Bone.UpdateRotation(LightBuzz.Quaternion,System.Single)">
+            <summary>
+            Updates the rotation of the current bone.
+            </summary>
+            <param name="newRotation">The new rotation.</param>
+            <param name="smoothDelta">The motion smoothing factor (0.0 - 1.0)</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Bone.UpdatePosition(UnityEngine.Vector3)">
+            <summary>
+            Updates the position of the current bone.
+            </summary>
+            <param name="newPosition">The new bone position.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Bone.Reset">
+            <summary>
+            Resets the rotation of the current bone.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Avateering.Jump">
+            <summary>
+            Functions that determine the jump.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Avateering.Jump.Tolerance">
+            <summary>Offset for the lowest joint from the floor (represents the minimum height of the joint).</summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Jump.IsJumping">
+            <summary>True if the body is jumping. False if not.</summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Jump.JumpHeight">
+            <summary>Jump height in meters.</summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Avateering.Jump.LowestJoint">
+            <summary>
+            Indicates the lowest joint in the body.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Jump.Update(LightBuzz.Kinect4Azure.Body,LightBuzz.Kinect4Azure.Floor)">
+            <summary>
+            Finds if the body has jump and how much.
+            Updates the variable LowestJoint.
+            </summary>
+            <param name="body">The body to calculate if it jumped.</param>
+            <param name="floor">The floor to calculate the jump.</param>
+            <returns>True if the body is jumping. False if not.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Jump.UpdateLowestJoint(LightBuzz.Kinect4Azure.Body)">
+            <summary>
+            Updates the variable LowestJoint.
+            </summary>
+            <param name="body"></param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Jump.FindLowestAnkle(LightBuzz.Kinect4Azure.Body)">
+            <summary>
+            Finds the lowest Y of the feet.
+            </summary>
+            <param name="body">Position in y.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.Jump.FindLowestFoot(LightBuzz.Kinect4Azure.Body)">
+            <summary>
+            Finds the lowest Y of the feet.
+            </summary>
+            <param name="body">Position in y.</param>
+            <returns></returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Avateering.NamespaceDoc">
+            <summary>
+            Avatar animation in the 3D and 2D space.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Avateering.TPose.DoTPose(System.Collections.Generic.Dictionary{UnityEngine.HumanBodyBones,LightBuzz.Kinect4Azure.Avateering.Bone})">
+            <summary>
+            Sets model to T pose.
+            </summary>
+            <param name="bones"></param>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.CalibrationExtensions">
+            <summary>
+            Provides utility methods for transforming between different calibration types.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.CalibrationExtensions.Extrinsics(Microsoft.Azure.Kinect.Sensor.Calibration,Microsoft.Azure.Kinect.Sensor.CalibrationDeviceType,Microsoft.Azure.Kinect.Sensor.CalibrationDeviceType)">
+            <summary>
+            Transforms from a source to a target calibration device type and returns the corresponding extrinsic parameters.
+            </summary>
+            <param name="calibration">The Kinect camera calibration.</param>
+            <param name="source">The source device type.</param>
+            <param name="target">The target device type.</param>
+            <returns>The transformed extrinsics.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.IMU">
+            <summary>
+            Represents and Inertial Measurement Unit (e.g. Accelerometer/Gyroscope).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.IMU.Timestamp">
+            <summary>
+            The timestamp of the unit.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.IMU.Sample">
+            <summary>
+            The sample of the IMU (in meters per second squared).
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.IMU.#ctor">
+            <summary>
+            Creates an empty IMU.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.IMU.#ctor(LightBuzz.Kinect4Azure.IMU)">
+            <summary>
+            Clones an IMU.
+            </summary>
+            <param name="other">The IMU to clone.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.IMU.Tilt(LightBuzz.Axis,System.Boolean)">
+            <summary>
+            Returns the tilt of the camera.
+            Positive: the camera faces upwards.
+            Negative: the camera faces downwards.
+            Zero: the camera is straight.
+            </summary>
+            <param name="axis">The axis to get the tilt from.</param>
+            <param name="degrees">The measurement unit (degrees or radians).</param>
+            <returns>The tilt of the camera.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.IMU.Pitch(System.Boolean)">
+            <summary>
+            Returns the rotation of the camera around the X axis.
+            Positive: the camera faces downwards.
+            Negative: the camera faces upwards.
+            Zero: the camera is straight.
+            </summary>
+            <param name="degrees">The measurement unit (degrees or radians).</param>
+            <returns>The Pitch rotation angle.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.IMU.Yaw(System.Boolean)">
+            <summary>
+            Returns the rotation of the camera around the Y axis.
+            Positive: the camera faces downwards.
+            Negative: the camera faces upwards.
+            Zero: the camera is straight.
+            </summary>
+            <param name="degrees">The measurement unit (degrees or radians).</param>
+            <returns>The Pitch rotation angle.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.IMU.Roll(System.Boolean)">
+            <summary>
+            Returns the rotation of the camera around the Z axis.
+            Positive: the camera faces downwards.
+            Negative: the camera faces upwards.
+            Zero: the camera is straight.
+            </summary>
+            <param name="degrees">The measurement unit (degrees or radians).</param>
+            <returns>The Pitch rotation angle.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.IMUFrameSource">
+            <summary>
+            Represents an Inertial Measurement Unit (IMU: Accelerometer and Gyroscope) frame source.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.IMUFrameSource.Temperature">
+            <summary>
+            The temperature of the unit (in Celsius).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.IMUFrameSource.Accelerometer">
+            <summary>
+            The Accelerometer data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.IMUFrameSource.Gyroscope">
+            <summary>
+            The Gyroscope data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Jpeg">
+            <summary>
+            JPEG encoding and decoding.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Jpeg.Encode(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Encodes the raw RGBA data to JPEG.
+            </summary>
+            <param name="rawData">The uncompressed raw RGBA data.</param>
+            <param name="width">The width of the image.</param>
+            <param name="height">The height of the image.</param>
+            <param name="quality">The JPEG encoding quality (0 - 100).</param>
+            <returns>The compressed JPEG data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Jpeg.Decode(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Decodes the compressed JPEG data to raw RGB data.
+            </summary>
+            <param name="jpegData">The compressed JPEG data.</param>
+            <param name="width">The width of the JPEG image.</param>
+            <param name="height">The height of the JPEG image.</param>
+            <returns>The raw uncompressed RGB array.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.NamespaceDoc">
+            <summary>
+            Video recording and playback module.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.FileExtensions">
+            <summary>
+            The common file extensions used in the LightBuzz Body-Tracking framework.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.Color">
+            <summary>
+            Raw color data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.Depth">
+            <summary>
+            Raw depth data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.Body">
+            <summary>
+            Raw body data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.Floor">
+            <summary>
+            Raw floor data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.IMU">
+            <summary>
+            Raw IMU data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.Configuration">
+            <summary>
+            Configuration settings.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.Timestamps">
+            <summary>
+            Timestamp data.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.JPG">
+            <summary>
+            JPEG
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.PNG">
+            <summary>
+            PNG
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.BIN">
+            <summary>
+            BIN
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.JSON">
+            <summary>
+            JSON
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.META">
+            <summary>
+            META
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileExtensions.LBZ">
+            <summary>
+            LBZ
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.FileNames">
+            <summary>
+            The common video file name.s
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileNames.Configuration">
+            <summary>
+            The configuration file.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Video.FileNames.Timestamps">
+            <summary>
+            The timestamps file.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.VideoConfiguration">
+            <summary>
+            Video configuration settings.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.Path">
+            <summary>
+            The path to the directory where the data will be saved.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.ColorResolution">
+            <summary>
+            The resolution of the color camera.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.DepthResolution">
+            <summary>
+            The resolution of the depth camera.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.RecordColor">
+            <summary>
+            Specifies whether the video should record color data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.RecordDepth">
+            <summary>
+            Specifies whether the video should record depth data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.RecordBody">
+            <summary>
+            Specifies whether the video should record body data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.RecordIMU">
+            <summary>
+            Specifies whether the video should record IMU data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoConfiguration.RecordFloor">
+            <summary>
+            Specifies whether the video should record floor data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.VideoHelper">
+            <summary>
+            Video utility methods for importing and exporting data.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(LightBuzz.Kinect4Azure.Video.VideoConfiguration)">
+            <summary>
+            Exports the current video configuration settings.
+            </summary>
+            <param name="configuration">The video configuration settings.</param>
+            <returns>A string representation of the video configuration.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportConfiguration(System.String)">
+            <summary>
+            Imports the video configuration settings.
+            </summary>
+            <param name="data">A string representation of the configuration data.</param>
+            <returns>The video configuration settings.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            Exports the specified list of timestamps.
+            </summary>
+            <param name="timestamps">The list of timestamps to export.</param>
+            <returns>A string representation of the timestamp data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(LightBuzz.Kinect4Azure.ColorFrameSource)">
+            <summary>
+            Exports the current raw color data array in byte array format.
+            </summary>
+            <param name="source">The color frame source to export.</param>
+            <returns>A byte array representation of the raw array data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportColorData(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Imports the recorded color frame data.
+            </summary>
+            <param name="jpegData">The JPEG data.</param>
+            <param name="width">The width of the color frame.</param>
+            <param name="height">The height of the color frame.</param>
+            <returns>The color frame data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(System.UInt16[])">
+            <summary>
+            Exports the current raw depth data array in byte array format.
+            </summary>
+            <param name="data">The raw depth data to export.</param>
+            <returns>A byte array representation of the ushort array data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">
+            <summary>
+            Exports the current list of bodies to string.
+            </summary>
+            <param name="bodies">The bodies to export.</param>
+            <returns>A string representation of the current bodies.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(LightBuzz.Kinect4Azure.IMUFrameSource)">
+            <summary>
+            Exports the current IMU data to string.
+            </summary>
+            <param name="source">The IMU frame source to export.</param>
+            <returns>A string representation of the IMU data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(LightBuzz.Kinect4Azure.FloorFrameSource)">
+            <summary>
+            Exports the current floor data to string.
+            </summary>
+            <param name="source">The floor frame source to export.</param>
+            <returns>A string representation of the floor data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(LightBuzz.Kinect4Azure.Body)">
+            <summary>
+            Exports the current body to a string.
+            </summary>
+            <param name="body">The body to export.</param>
+            <returns>A string representation of the current body.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportBodyData(System.String)">
+            <summary>
+            Imports a list of bodies from the specified string data.
+            </summary>
+            <param name="data">The string data, exported using the <see cref="M:LightBuzz.Kinect4Azure.Video.VideoHelper.Export(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">VideoHelper.Export</see> method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportTimestamps(System.String)">
+            <summary>
+            Imports the timestamps of the recorded frames.
+            </summary>
+            <param name="data">A line-separated string of the timestamps.</param>
+            <returns>A list of timestamps of the recorded frames.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportDepthData(System.Byte[])">
+            <summary>
+            Imports the recorded depth data.
+            </summary>
+            <param name="data">The raw depth frame data.</param>
+            <returns>The depth frame data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportIMUData(System.String)">
+            <summary>
+            Imports the recorded IMU data.
+            </summary>
+            <param name="data">The raw IMU frame data.</param>
+            <returns>The IMU frame data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoHelper.ImportFloorData(System.String)">
+            <summary>
+            Imports the recorded floor data.
+            </summary>
+            <param name="data">The raw floor frame data.</param>
+            <returns>The floor frame data.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.VideoPlayer">
+            <summary>
+            Loads recorded frames (Color, Depth, and Body data).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.Timestamps">
+            <summary>
+            A shorted list of the timestamps of each frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.IsPlaying">
+            <summary>
+            Checks whether the video player is playing.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.TimeElapsed">
+            <summary>
+            The elapsed time of the current frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.FrameCount">
+            <summary>
+            The total number of video frames.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.FrameRate">
+            <summary>
+            The number of frames per second of the current video.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.Seek">
+            <summary>
+            Normalizes the current frame index to a value between 0.0 and 1.0.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.IsPaused">
+            <summary>
+            Pauses or continues video playback.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.Loop">
+            <summary>
+            Loop video playback.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.Speed">
+            <summary>
+            The speed of the current video playback (e.g. 0.5, 1.0, 2.0, etc).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.Folder">
+            <summary>
+            The video recording folder.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoPlayer.Duration">
+            <summary>
+            The duration of the video.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoPlayer.#ctor">
+            <summary>
+            Creates a new video recorder.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoPlayer.#ctor(System.String)">
+            <summary>
+            Creates a new video recorder with the specified video path.
+            </summary>
+            <param name="path">The recording video path.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoPlayer.Start">
+            <summary>
+            Starts playing the video.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoPlayer.Stop">
+            <summary>
+            Stops playing the video.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoPlayer.Dispose">
+            <summary>
+            Releases resources.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoPlayer.Update">
+            <summary>
+            Returns the frame to play.
+            </summary>
+            <returns>The frame to play.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Video.VideoRecorder">
+            <summary>
+            Records Color, Depth, and Body data.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Kinect4Azure.Video.VideoRecorder.OnRecordingStarted">
+            <summary>
+            Raised when the recording process has started.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Kinect4Azure.Video.VideoRecorder.OnRecordingStopped">
+            <summary>
+            Raised when the recording process has stopped.
+            </summary>
+        </member>
+        <member name="E:LightBuzz.Kinect4Azure.Video.VideoRecorder.OnRecordingCompleted">
+            <summary>
+            Raised when the recording process has finished saving frames.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoRecorder.Configuration">
+            <summary>
+            The video recording configuration settings.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoRecorder.IsRecording">
+            <summary>
+            Specifies whether the recorder is currently recording frames.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoRecorder.IsSaving">
+            <summary>
+            Specifies whether the recorder is currently saving frames.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Video.VideoRecorder.Timestamps">
+            <summary>
+            A list of the recorded timestamps in descending order.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoRecorder.#ctor">
+            <summary>
+            Creates a new video recorder with the default configuration settings.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoRecorder.#ctor(LightBuzz.Kinect4Azure.Video.VideoConfiguration)">
+            <summary>
+            Creates a new video recorder with the specified configuration settings.
+            </summary>
+            <param name="configuration">The recording configuration settings.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoRecorder.Start">
+            <summary>
+            Starts recording.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoRecorder.Stop">
+            <summary>
+            Stops recording.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoRecorder.Update(LightBuzz.Kinect4Azure.Frame)">
+            <summary>
+            Records the specified frame.
+            </summary>
+            <param name="frame">The frame to record.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Video.VideoRecorder.Dispose">
+            <summary>
+            Releases any resources.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Body">
+            <summary>
+            Represents a human Body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Body.ID">
+            <summary>
+            The unique identifier of the current Body.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Body.Joints">
+            <summary>
+            The human body joints.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.BodyExtensions">
+            <summary>
+            Common Body utlities.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.BodyExtensions.Closest(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">
+            <summary>
+            Returns the closest body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The closest body.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.BodyExtensions.Farthest(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">
+            <summary>
+            Returns the farthest body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The farthest body.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.BodyExtensions.Left(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">
+            <summary>
+            Returns the leftmost body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The leftmost body.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.BodyExtensions.Right(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">
+            <summary>
+            Returns the rightmost body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The rightmost body.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.BodyExtensions.Center(System.Collections.Generic.IList{LightBuzz.Kinect4Azure.Body})">
+            <summary>
+            Returns the center body.
+            </summary>
+            <param name="bodies">A list of bodies.</param>
+            <returns>The center body.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.ConfigurationExtensions">
+            <summary>
+            Sensor configuration extensions.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.ConfigurationExtensions.Size(LightBuzz.Kinect4Azure.ColorResolution)">
+            <summary>
+            Returns the width and height of the current color resolution (in pixels).
+            </summary>
+            <param name="resolution">The current color resolution.</param>
+            <returns>The width and height of the frame.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.ConfigurationExtensions.Size(LightBuzz.Kinect4Azure.DepthMode)">
+            <summary>
+            Returns the width and height of the current depth mode (in pixels).
+            </summary>
+            <param name="mode">The current depth mode.</param>
+            <returns>The width and height of the frame.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.FieldOfView">
+            <summary>
+            The field of view of the camera.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.FieldOfView.OK">
+            <summary>
+            The field of view is OK.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.FieldOfView.Limited">
+            <summary>
+            The field of view is limited
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Floor">
+            <summary>
+            Represents a Floor plane.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Floor.X">
+            <summary>
+            The X coordinate of the normal vector.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Floor.Y">
+            <summary>
+            The Y coordinate of the normal vector.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Floor.Z">
+            <summary>
+            The Z coordinate of the normal vector.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Floor.W">
+            <summary>
+            The vertical distance between the floor and the sensor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Floor.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a new Floor plane.
+            </summary>
+            <param name="x">The X coordinate of the normal vector.</param>
+            <param name="y">The Y coordinate of the normal vector.</param>
+            <param name="z">The Z coordinate of the normal vector.</param>
+            <param name="w">The vertical distance between the current and the sensor.</param>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Floor.#ctor(LightBuzz.Kinect4Azure.Floor)">
+            <summary>
+            Clones a floor plane.
+            </summary>
+            <param name="other">The floor plane to clone.</param>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Floor.Height">
+            <summary>
+            The vertical distance between the floor and the sensor (absolute value).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Floor.Tilt">
+            <summary>
+            Returns the tilt of the camera.
+            Positive: the camera faces upwards.
+            Negative: the camera faces downwards.
+            Zero: the camera is straight.
+            NaN: the accelerometer did not provide valid data or the field of view is very limited.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Floor.FieldOfView">
+            <summary>
+            Returns whether the field of view is OK or limited.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Floor.Distance(LightBuzz.Vector3D)">
+            <summary>
+            Calculates the distance between the floor plane and the specified point in the 3D space.
+            </summary>
+            <param name="point">A point in the 3D world space.</param>
+            <returns>The distance between the floor plane and the point (in meters).</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.FloorFrameSource">
+            <summary>
+            Represents a Floor frame source.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.FloorFrameSource.Floor">
+            <summary>
+            The floor plane data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.BodyFrameSource">
+            <summary>
+            Represents a Body frame source.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.BodyFrameSource.Bodies">
+            <summary>
+            The human Body data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.ColorFormat">
+            <summary>
+            Color image format type.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.MJPG">
+            <summary>
+            Color image type MJPG.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.NV12">
+            <summary>
+            Color image type NV12.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.YUY2">
+            <summary>
+            Color image type YUY2.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.BGRA32">
+            <summary>
+            Color image type BGRA32.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.DEPTH16">
+            <summary>
+            Depth image type DEPTH16.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.IR16">
+            <summary>
+            Image type IR16.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.CUSTOM8">
+            <summary>
+            Single channel image type CUSTOM8.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.CUSTOM16">
+            <summary>
+            Single channel image type CUSTOM16.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorFormat.CUSTOM">
+            <summary>
+            Custom image format.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.ColorFrameSource">
+            <summary>
+            Represents a Color frame source.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.ColorFrameSource.Data">
+            <summary>
+            The buffer (byte array) of the frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.ColorFrameSource.Width">
+            <summary>
+            The width of the frame (in pixels).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.ColorFrameSource.Height">
+            <summary>
+            The height of the frame (in pixels).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.ColorFrameSource.Stride">
+            <summary>
+            The stride of the frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.ColorFrameSource.PointCloud">
+            <summary>
+            The BGRA color values of the point cloud.
+            Attention: you should set enable the GeneratePointCloud configuration option to true.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.ColorFrameSource.BytesPerPixel">
+            <summary>
+            The number of bytes per pixel.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.ColorResolution">
+            <summary>
+            Color sensor resolutions.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_OFF">
+            <summary>
+            Color camera will be turned off with this setting.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_720P">
+            <summary>
+            1280x720 (16:9)
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_1080P">
+            <summary>
+            1920x1080 (16:9)
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_1440P">
+            <summary>
+            2560x1440 (16:9)
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_1536P">
+            <summary>
+            2048x1536 (4:3)
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_2160P">
+            <summary>
+            3840x2160 (16:9)
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.ColorResolution.ColorResolution_3072P">
+            <summary>
+            4096x3072 (4:3)
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.CoordinateMapper">
+            <summary>
+            Provides transformations across the 2D and 3D space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.CoordinateMapper.Calibration">
+            <summary>
+            The native device calibration.
+            Source: https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/struct_microsoft_1_1_azure_1_1_kinect_1_1_sensor_1_1_calibration.html
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.CoordinateMapper.MapWorldToColor(LightBuzz.Vector3D)">
+            <summary>
+            Maps the specified point from the 3D world space to the 2D color space.
+            </summary>
+            <param name="point3D">The 3D world point.</param>
+            <returns>The corresponding 2D color point.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.CoordinateMapper.MapWorldToDepth(LightBuzz.Vector3D)">
+            <summary>
+            Maps the specified point from the 3D world space to the 2D depth space.
+            </summary>
+            <param name="point3D">The 3D world point.</param>
+            <returns>The corresponding 2D depth point.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.CoordinateMapper.MapColorToWorld(LightBuzz.Vector2D)">
+            <summary>
+            Maps the specified point from the 2D color space to the 3D world space.
+            </summary>
+            <param name="point2D">The 2D color point.</param>
+            <returns>The corresponding 3D world point.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.CoordinateMapper.MapDepthToWorld(LightBuzz.Vector2D,System.Single)">
+            <summary>
+            Maps the specified point from the 2D depth space to the 3D world space.
+            </summary>
+            <param name="point2D">The 2D depth point.</param>
+            <param name="depth">The depth of the 2D point (in meters).</param>
+            <returns>The corresponding 3D world point.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.UserFrameSource">
+            <summary>
+            Represents a User Index Map frame source.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.UserFrameSource.Background">
+            <summary>
+            Indication that a point belongs to the background.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.UserFrameSource.Data">
+            <summary>
+            The buffer (byte array) of the frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.UserFrameSource.Width">
+            <summary>
+            The width of the frame (in pixels).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.UserFrameSource.Height">
+            <summary>
+            The height of the frame (in pixels).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.UserFrameSource.Stride">
+            <summary>
+            The stride of the frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.UserFrameSource.BytesPerPixel">
+            <summary>
+            The number of bytes per pixel.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.DepthFrameSource">
+            <summary>
+            Represents a Depth frame source.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.DepthFrameSource.Data">
+            <summary>
+            The buffer (ushort array) of the frame. Measured in millimeters.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.DepthFrameSource.Width">
+            <summary>
+            The width of the frame (in pixels).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.DepthFrameSource.Height">
+            <summary>
+            The height of the frame (in pixels).
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.DepthFrameSource.Stride">
+            <summary>
+            The stride of the frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.DepthFrameSource.PointCloud">
+            <summary>
+            The 3D coordinates of the point cloud (measured in millimeters).
+            Attention: you should set enable the GeneratePointCloud configuration option to true.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.DepthFrameSource.BytesPerPixel">
+            <summary>
+            The number of bytes per pixel.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.DepthMode">
+            <summary>
+            Depth sensor capture modes.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.DepthMode.Off">
+            <summary>
+            Depth sensor will be turned off with this setting.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.DepthMode.NFOV_2X2Binned">
+            <summary>
+            Depth captured at 320x288. Passive IR is also captured at 320x288.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.DepthMode.NFOV_Unbinned">
+            <summary>
+            Depth captured at 640x576. Passive IR is also captured at 640x576.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.DepthMode.WFOV_2X2Binned">
+            <summary>
+            Depth captured at 512x512. Passive IR is also captured at 512x512.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.DepthMode.WFOV_Unbinned">
+            <summary>
+            Depth captured at 1024x1024. Passive IR is also captured at 1024x1024.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.DepthMode.PassiveIR">
+            <summary>
+            Passive IR only, captured at 1024x1024.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Frame">
+            <summary>
+            Encapsulates Azure Kinect frame data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.Timestamp">
+            <summary>
+            The unique timestamp of the frame.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.ColorFrameSource">
+            <summary>
+            The color frame data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.DepthFrameSource">
+            <summary>
+            The depth frame data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.UserFrameSource">
+            <summary>
+            The user-index map frame data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.BodyFrameSource">
+            <summary>
+            The body frame data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.FloorFrameSource">
+            <summary>
+            The floor frame data.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Frame.IMUFrameSource">
+            <summary>
+            The IMU frame data.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.FramesPerSecond">
+            <summary>
+            Color and depth sensor frame rate.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.FramesPerSecond.FPS_5">
+            <summary>
+            5 FPS.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.FramesPerSecond.FPS_15">
+            <summary>
+            15 FPS.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.FramesPerSecond.FPS_30">
+            <summary>
+            30 FPS.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Joint">
+            <summary>
+            Represents a human body joint.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Joint.JointType">
+            <summary>
+            The type of the joint.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Joint.TrackingState">
+            <summary>
+            The tracking state of the joint.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Joint.Position">
+            <summary>
+            The position of the joint in the 3D world space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Joint.Orientation">
+            <summary>
+            The orientation of the joint.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Joint.PositionColor">
+            <summary>
+            The position of the joint in the 2D color space.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Joint.PositionDepth">
+            <summary>
+            The position of the joint in the 2D depth space.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.JointType">
+            <summary>
+            Represents the Azure Kinect joint types.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.Pelvis">
+            <summary>
+            Pelvis
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.SpineNaval">
+            <summary>
+            Spine Naval
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.SpineChest">
+            <summary>
+            Spine Chest
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.Neck">
+            <summary>
+            Neck
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ClavicleLeft">
+            <summary>
+            Left Clavicle
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ShoulderLeft">
+            <summary>
+            Left Shoulder
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ElbowLeft">
+            <summary>
+            Left Elbow
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.WristLeft">
+            <summary>
+            Left Wrist
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.HandLeft">
+            <summary>
+            Left Hand
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.HandtipLeft">
+            <summary>
+            Left Hand-tip
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ThumbLeft">
+            <summary>
+            Left Thumb
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ClavicleRight">
+            <summary>
+            Right Clavicle
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ShoulderRight">
+            <summary>
+            Right Shoulder
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ElbowRight">
+            <summary>
+            Right Elbow
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.WristRight">
+            <summary>
+            Right Wrist
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.HandRight">
+            <summary>
+            Right Hand
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.HandtipRight">
+            <summary>
+            Right Hand-tip
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.ThumbRight">
+            <summary>
+            Right Thumb
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.HipLeft">
+            <summary>
+            Left Hip
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.KneeLeft">
+            <summary>
+            Left Knee
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.AnkleLeft">
+            <summary>
+            Left Ankle
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.FootLeft">
+            <summary>
+            Left Foot
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.HipRight">
+            <summary>
+            Right Hip
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.KneeRight">
+            <summary>
+            Right Knee
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.AnkleRight">
+            <summary>
+            Right Ankle
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.FootRight">
+            <summary>
+            Right Foot
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.Head">
+            <summary>
+            Head
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.Nose">
+            <summary>
+            Nose
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.EyeLeft">
+            <summary>
+            Left Eye
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.EarLeft">
+            <summary>
+            Left Ear
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.EyeRight">
+            <summary>
+            Right Eye
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.JointType.EarRight">
+            <summary>
+            Right Ear
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.KinectSensor">
+            <summary>
+            Represents an Azure Kinect sensor device.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.KinectSensor.IsOpen">
+            <summary>
+            Specifies whether the sensor is open and streaming.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.KinectSensor.CoordinateMapper">
+            <summary>
+            The coordinate mapper.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.KinectSensor.Configuration">
+            <summary>
+            The configuration parameters of the sensor.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.KinectSensor.Count">
+            <summary>
+            Returns the number of the connect Kinect devices.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.#ctor">
+            <summary>
+            Creates a new Azure Kinect sensor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.Create(LightBuzz.Kinect4Azure.Configuration)">
+            <summary>
+            Creates a new <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> with the specified configuration parameters.
+            </summary>
+            <param name="configuration">The configuration parameters for the sensor.</param>
+            <returns>A <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> device or null.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.Create(System.Int32)">
+            <summary>
+            Creates a new <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> with the specified device index and the default configuration parameters.
+            </summary>
+            <param name="index">The index of the device (if more than 1 devices are connected).</param>
+            <returns>A <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> device or null.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.GetDefault">
+            <summary>
+            Creates a new <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> with the default configuration parameters and the default device index.
+            </summary>
+            <returns>A <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> device or null.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.Open">
+            <summary>
+            Opens the sensor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.Close">
+            <summary>
+            Closes the sensor.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.Update">
+            <summary>
+            Returns the latest frame data.
+            </summary>
+            <returns>The latest frame data.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.Equals(System.Object)">
+            <summary>
+            Specifies whether two instances of a <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> device refer to the same physical device.
+            </summary>
+            <param name="obj">The device to compare with.</param>
+            <returns>True if both instances refer to the same device. False otherwise.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.KinectSensor.GetHashCode">
+            <summary>
+            Serves as the hash function for the <see cref="T:LightBuzz.Kinect4Azure.KinectSensor"/> type.
+            </summary>
+            <returns>The hash code value.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.Configuration">
+            <summary>
+            Encapsulates the configuration parameters of a Kinect sensor device.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultDeviceIndex">
+            <summary>
+            The default device index number.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultFramePerSecond">
+            <summary>
+            The default frame rate.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultDepthMode">
+            <summary>
+            The default depth mode format.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultColorFormat">
+            <summary>
+            The default color image format.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultColorResolution">
+            <summary>
+            The default color image resolution.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultSyncedImagesOnly">
+            <summary>
+            The default synchronization mode of Color and Depth images.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultWiredSyncMode">
+            <summary>
+            The default wired sync mode.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultEnableColorPointCloud">
+            <summary>
+            The default enable color-based point cloud option.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultEnableDepthPointCloud">
+            <summary>
+            The default enable depth-based point cloud option.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultEnableFloorTracking">
+            <summary>
+            The default enable floor tracking option.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultEnableIMU">
+            <summary>
+            The default value for enabling the IMU unit.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultSmoothing">
+            <summary>
+            The default body-tracking smoothing.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultProcessingMode">
+            <summary>
+            The default body-tracking processing mode (CPU/GPU).
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultSensorOrientation">
+            <summary>
+            The default sensor orientation.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultGpuDeviceId">
+            <summary>
+            The default GPU device ID.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.Configuration.DefaultModelPath">
+            <summary>
+            The default AI body tracking model path.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.DeviceIndex">
+            <summary>
+            The index of the current device.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.FPS">
+            <summary>
+            The frame rate.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.DepthMode">
+            <summary>
+            The depth mode.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.ColorFormat">
+            <summary>
+            The color image format.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.ColorResolution">
+            <summary>
+            The color image resolution.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.SyncedImagesOnly">
+            <summary>
+            Specifies whether the device will only serve synchronized Color and Depth images.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.WiredSyncMode">
+            <summary>
+            Specifies the wired sync mode of the device.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.EnableIMU">
+            <summary>
+            Specifies whether the sensor should enable the IMU.
+            ATTENTION: As reported to Microsoft, the IMU is causing a memory leak. Use with caution!
+            https://github.com/microsoft/Azure-Kinect-Sensor-SDK/issues/1230
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.EnableColorPointCloud">
+            <summary>
+            Specifies whether the sensor should generate a color point cloud.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.EnableDepthPointCloud">
+            <summary>
+            Specifies whether the sensor should generate a depth point cloud.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.EnableFloorTracking">
+            <summary>
+            Specifies whether the sensor should generate a depth point cloud.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.Smoothing">
+            <summary>
+            Specifies the temporal smoothing across frames (0.0 - 1.0). 
+            Set to 0.0 for no smoothing.
+            Set to 1.0 for full smoothing.
+            Less smoothing will increase the responsiveness of the detected skeletons but will cause more positional and orientational jitters.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.ProcessingMode">
+            <summary>
+            Specifies the body-tracking processing mode (CPU/GPU).
+            GPU provides significantly better tracking.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.SensorOrientation">
+            <summary>
+            Specifies the sensor orientation for body-tracking.
+            This will not rotate the color/depth view; it will simply optimize body-tracking for the desired sensor rotation.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.GpuDeviceId">
+            <summary>
+            Specifies the GPU device ID.
+            </summary>
+        </member>
+        <member name="P:LightBuzz.Kinect4Azure.Configuration.ModelPath">
+            <summary>
+            Specifies the AI body tracking model path.
+            If left empty, it assumes the model is located next to the executable file.
+            </summary>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Configuration.Equals(System.Object)">
+            <summary>
+            Specifies whether two configurations are the same.
+            </summary>
+            <param name="obj">The configuration to compare with.</param>
+            <returns>True if both configurations are the same. False otherwise.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Configuration.GetHashCode">
+            <summary>
+            Serves as the hash function for the <see cref="T:LightBuzz.Kinect4Azure.Configuration"/> type.
+            </summary>
+            <returns>A hash representation of the current object.</returns>
+        </member>
+        <member name="M:LightBuzz.Kinect4Azure.Configuration.ToString">
+            <summary>
+            Lists the configuration parameters of the current <see cref="T:LightBuzz.Kinect4Azure.Configuration"/>.
+            </summary>
+            <returns>A string representation of the current configuration.</returns>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.NamespaceDoc">
+            <summary>
+            The Azure Kinect Unity SDK by LightBuzz.
+            </summary>
+        </member>
+        <member name="T:LightBuzz.Kinect4Azure.TrackingState">
+            <summary>
+            The tracking state.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.TrackingState.None">
+            <summary>
+            The joint is out of range (too far from depth camera).
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.TrackingState.Low">
+            <summary>
+            The joint is not observed (likely due to occlusion), predicted joint pose.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.TrackingState.Medium">
+            <summary>
+            Medium confidence in joint pose. Current SDK will only provide joints up to this confidence level.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.TrackingState.High">
+            <summary>
+            High confidence in joint pose. Placeholder for future SDK.
+            </summary>
+        </member>
+        <member name="F:LightBuzz.Kinect4Azure.TrackingState.Count">
+            <summary>
+            The total number of tracking states.
+            </summary>
+        </member>
+    </members>
+</doc>
